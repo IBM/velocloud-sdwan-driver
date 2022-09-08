@@ -1,0 +1,11 @@
+{
+  "enterpriseId": {{ enterpriseId }},
+  "id": {{ id }},
+  "edgeId": {{ edgeId }},
+  "edgeIds": [
+        {{ edgeIds }}
+  ],
+  "ids": [
+    {{ ids }}
+  ]
+}

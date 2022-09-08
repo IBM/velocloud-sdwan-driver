@@ -1,0 +1,32 @@
+{
+  "enterpriseId": enterpriseId,
+  "configurationId": configurationId,
+  "name": name,
+  "serialNumber": serialNumber,
+  "modelNumber": modelNumber,
+  "description": description,
+  "site": {
+    "city": siteCity,
+    "contactEmail": siteContactEmail,
+    "contactMobile": siteContactMobile,
+    "contactName": siteContactName,
+    "contactPhone": siteContactPhone,
+    "country": siteCountry,
+    "lat": siteLat,
+    "lon": siteLon,
+    "name": siteName,
+    "postalCode": sitePostalCode,
+    "state": siteState,
+    "streetAddress": siteStreetAddress,
+    "streetAddress2": siteStreetAddress2
+  },
+  "haEnabled": hasEnabled,
+  "generateCertificate": generateCertificate,
+  "subjectCN": subjectCN,
+  "subjectO": subjectO,
+  "subjectOU": subjectOU,
+  "challengePassword": challengePassword,
+  "privateKeyPassword": privateKeyPassword,
+  "edgeLicenseId": edgeLicenseId,
+  "customInfo": customInfo
+}

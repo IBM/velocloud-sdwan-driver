@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velocloud-sdwan-driver
+data:
+{{- if .Values.app.config.env }}
+{{ toYaml .Values.app.config.env | indent 2 }}
+{{- end }}
+  "alm_vnfmdriver_config_name": {{ .Values.app.config.rmName }}
+  "spring_profiles_include": "prod,kubernetes"
+  "spring_profiles_active": {{ .Values.app.config.profiles | toString | quote }}
+  "LOG_FOLDER": "/var/lm/logs"
+{{- if .Values.app.config.packageRepositoryUrl }}
+  "vnfmdriver_packageManagement_packageRepositoryUrl": {{ .Values.app.config.packageRepositoryUrl }}
+{{- end }}
+{{- if .Values.app.config.repositoryName }}
+  "vnfmdriver_packageManagement_repositoryName": {{ .Values.app.config.repositoryName }}
+{{- end }}
+{{- if .Values.app.config.nexusGroupName }}
+  "vnfmdriver_packageManagement_nexusGroupName": {{ .Values.app.config.nexusGroupName }}
+{{- end }}
+{{- if .Values.app.config.authenticationProperties }}
+{{- if .Values.app.config.authenticationProperties.type }}
+  "vnfmdriver_packageManagement_authenticationProperties_type": {{ .Values.app.config.authenticationProperties.type }}
+{{- end }}
+{{- if .Values.app.config.authenticationProperties.username }}
+  "vnfmdriver_packageManagement_authenticationProperties_username": {{ .Values.app.config.authenticationProperties.username }}
+{{- end }}
+{{- if .Values.app.config.authenticationProperties.password }}
+  "vnfmdriver_packageManagement_authenticationProperties_password": {{ .Values.app.config.authenticationProperties.password }}
+{{- end }}
+{{- end }}
+{{- if .Values.app.jvmOptions }}
+  "JVM_OPTIONS": {{ .Values.app.jvmOptions }}
+{{- end }}
+{{- if .Values.app.config.enablePayloadLog }}
+  "enable_payload_log": "true"
+{{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: velocloud-sdwan-driver
+  labels:
+    app: velocloud-sdwan-driver
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: 8196
+    targetPort: 8196
+{{- if eq .Values.service.type "NodePort" }}
+    nodePort: {{ .Values.service.nodePort }}
+{{- end }}
+    protocol: TCP
+    name: http
+  selector:
+    app: velocloud-sdwan-driver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velocloud-sdwan-driver
+spec:
+  replicas: {{ .Values.app.numReplicas }}
+  selector:
+    matchLabels:
+      app: velocloud-sdwan-driver
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: velocloud-sdwan-driver
+        part-of: lm
+    spec:
+{{- if .Values.app.affinity }}
+      affinity:
+{{ toYaml .Values.app.affinity | indent 8 }}
+{{- end }}
+{{- if .Values.app.tolerations }}
+      tolerations:
+{{ toYaml .Values.app.tolerations | indent 8 }}
+{{- end }}
+      containers:
+        - name: velocloud-sdwan-driver
+{{- if .Values.global.docker.registryEnabled }}
+          image: {{ .Values.global.docker.registryIp }}:{{ .Values.global.docker.registryPort }}/{{ .Values.docker.image }}:{{ .Values.docker.version }}
+          imagePullPolicy: {{ .Values.global.docker.imagePullPolicy }}
+{{- else }}
+          image: {{ .Values.docker.image }}:{{ .Values.docker.version }}
+          imagePullPolicy: {{ .Values.docker.imagePullPolicy }}
+{{- end }}
+          {{- if or (not (.Capabilities.APIVersions.Has "security.openshift.io/v1")) (eq .Release.Namespace "kube-system") (ne (toString .Values.global.arbitraryUids) "true") }}
+          securityContext:
+            # run as sld user (1000)
+            runAsUser: 1000
+          {{- end }}
+          ports:
+          - containerPort: 8196
+            protocol: TCP
+          livenessProbe:
+            failureThreshold: {{ .Values.app.livenessProbe.failureThreshold }}
+            httpGet:
+              path: /management/health
+              port: 8196
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.app.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.app.livenessProbe.periodSeconds }}
+          readinessProbe:
+            failureThreshold: {{ .Values.app.readinessProbe.failureThreshold }}
+            httpGet:
+              path: /management/health
+              port: 8196
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.app.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.app.readinessProbe.periodSeconds }}
+          envFrom:
+          - configMapRef:
+              name: velocloud-sdwan-driver
+          resources:
+{{ toYaml .Values.app.resources | indent 12 }}
+{{- if .Values.app.certificateSecret }}
+          volumeMounts:
+            - mountPath: /var/lm/certs
+              name: certificates
+      volumes:
+      - name: certificates
+        secret:
+          defaultMode: 420
+          secretName: {{ .Values.app.certificateSecret }}
+{{- end }}

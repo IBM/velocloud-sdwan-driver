@@ -1,0 +1,19 @@
+name: velocloud-sdwan-driver
+version: #project.version#
+apiVersion: v1
+description: A Helm chart for the sdwan
+maintainers:
+- name: Accanto Systems
+  email: containers@accantosystems.com
+icon: http://www.accantosystems.com/wp-content/uploads/2017/06/Accanto-w_white-systems200px.png
+keywords:
+- LM
+- ALM
+- SLM
+- Lifecycle
+- Accanto
+- ETSI
+- sdwan
+- VNFM
+- Driver
+engine: gotpl
