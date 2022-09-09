@@ -13,7 +13,7 @@
 
 - Hari Krishna [@hari.krishna1](https://github.com/HariKrishna1-ibm)
 - Lokanadham Nalla [@lokanadham.nalla1](https://github.com/lokanalla)
-- Mahesh Pulle [@mahesh.pulle](https://github.ibm.com/Mahesh-Pulle)
+- Mahesh Pulle [@mahesh.pulle](https://github.com/MaheshPulle7)
 
 ## Reporting Issues
 
