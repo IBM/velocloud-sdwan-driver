@@ -2,6 +2,8 @@ package com.ibm.sdwan.velocloud.service.impl;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,18 +47,17 @@ public class KafkaInternalMessagingServiceImplTest {
  		Mockito.when(objectMapper.writeValueAsString(any())).thenReturn("test");
  		Mockito.when(kafkaTemplate.send(Mockito.anyString(), Mockito.anyString())).thenReturn(responseFuture);
     	kafkaInternalMessagingServiceImpl.sendEdgeStatusAsyncResponse(edgeStatusMessage);
-	   
+    	verify(kafkaTemplate, times(1)).send(Mockito.anyString(), Mockito.anyString());
    }
- 
+  
     @Test
  	@DisplayName("Testing exception scenario for Async Response--JsonProcessingException")
     public void  sendEdgeStatusAsyncResponseexception() throws JsonProcessingException {
     	SendResult<String, Object> sendResult = mock(SendResult.class);
  		ListenableFuture<SendResult<String, String>> responseFuture = mock(ListenableFuture.class);
-
  		Mockito.when(objectMapper.writeValueAsString(any())).thenThrow(JsonProcessingException.class);
- 		kafkaInternalMessagingServiceImpl.sendEdgeStatusAsyncResponse(null);
-	   
+ 		kafkaInternalMessagingServiceImpl.sendEdgeStatusAsyncResponse(null); 
+ 		verify(kafkaTemplate, times(0)).send(Mockito.anyString(), Mockito.anyString());
    }
     
 }

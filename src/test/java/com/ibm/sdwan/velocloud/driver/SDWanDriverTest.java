@@ -52,7 +52,6 @@ public class SDWanDriverTest {
 	@Test
  	@DisplayName("Testing positive scenario to get EdgeConfigurationStack")
 	public void getEdgeConfigurationStackTest() {
-		
 		ResponseEntity<String> response = new ResponseEntity<String>("", HttpStatus.OK);
 		ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor = ArgumentCaptor.forClass(HttpEntity.class);
 		when(restTemplate.exchange(eq(DESCRIPTORS_API_URL), eq(HttpMethod.POST), httpEntityArgumentCaptor.capture(), 
@@ -85,7 +84,7 @@ public class SDWanDriverTest {
 	}
 	
 	@Test
-	@DisplayName("Testing scenario to Execute URL for LIFECYCLE_CREATE")
+	@DisplayName("Testing positive scenario to Execute URL for LIFECYCLE_CREATE")
 	public void executeURLforLIFECYCLE_CREATE () {
 		String url = "http://localhost:8080/api/velocloud/edge/edgeProvision";
 		ResponseEntity<String> response = new ResponseEntity<String>("test", HttpStatus.OK);
@@ -97,7 +96,7 @@ public class SDWanDriverTest {
 	}
 	
 	@Test
-	@DisplayName("Testing scenario to execute URL - with Exception")
+	@DisplayName("Testing Exception scenario to execute URL - with Exception")
 	public void executeURLforException () {
 		String url = "http://localhost:8080/api/velocloud/edge/edgeProvision";
 		ResponseEntity<String> response = new ResponseEntity<String>("", HttpStatus.OK);
@@ -111,7 +110,7 @@ public class SDWanDriverTest {
 	}
 	
 	@Test
-	@DisplayName("Testing  scenario for execute URL for LIFECYCLE_DELETE - with error")
+	@DisplayName("Testing  Exception scenario for execute URL for LIFECYCLE_DELETE - with error")
 	public void executeURLforLIFECYCLE_DELETEWithError() {
 		String url = "http://localhost:8080/api/velocloud/edge/deleteEdge";
 		String resp = null;
@@ -127,7 +126,7 @@ public class SDWanDriverTest {
 	}
 	
 	@Test
-	@DisplayName("Testing positive scenario Execute URL for LIFECYCLE_OPERATION_DELETE_VCE_STATIC_IP")
+	@DisplayName("Testing exception scenario to Execute URL for LIFECYCLE_OPERATION_DELETE_VCE_STATIC_IP")
 	public void executeURLforLIFECYCLE_OPERATION_DELETE_VCE_STATIC_IP() {
 		String url = "http://localhost:8080/api/velocloud/configuration/updateConfigurationModule";
 		String resp = null;
@@ -143,8 +142,8 @@ public class SDWanDriverTest {
 	}
 	
 	@Test
-	@DisplayName("Testing positive scenario for ExecuteEdge - with exception")
-	public void executeEdgeTest_withException() {
+	@DisplayName("Testing positive scenario to execute Url for  GET_EDGE")
+	public void executeEdge() {
 		String url = "http://localhost:8080/api/velocloud/edge/getEdge";
 		ResponseEntity<String> response = new ResponseEntity<String>("", HttpStatus.OK);
 		ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor = ArgumentCaptor.forClass(HttpEntity.class);
