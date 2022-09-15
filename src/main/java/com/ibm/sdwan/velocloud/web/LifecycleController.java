@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import static com.ibm.sdwan.velocloud.utils.Constants.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController("LifecycleController")
@@ -35,9 +35,9 @@ public class LifecycleController {
 
     @PostMapping("/lifecycle/execute")
     @ApiOperation(value = "Execute a lifecycle against a sdwan", notes = "Initiates a lifecycle ")
-    public ResponseEntity<ExecutionAcceptedResponse> executeLifecycle(@RequestBody ExecutionRequest executionRequest, @RequestHeader(value = "TenantId", required = false) String tenantId, HttpServletRequest servletRequest) throws MessageConversionException{
+    public ResponseEntity<ExecutionAcceptedResponse> executeLifecycle(@RequestBody ExecutionRequest executionRequest, @RequestHeader(value = "tenantId", required = false) String tenantId, HttpServletRequest servletRequest) throws MessageConversionException{
         logger.info("Received request to execute a lifecycle [{}] ", executionRequest.getLifecycleName());
-        logger.debug("Received tenantID [{}] ",tenantId);
+        logger.debug("Received tenantId [{}] ",tenantId);
         tenantId = StringUtils.defaultIfEmpty(tenantId, "1");
         final ExecutionAcceptedResponse responseData = lifecycleManagementService.executeLifecycle(executionRequest, tenantId);
         if(tenantId.equals("1")){
@@ -49,7 +49,7 @@ public class LifecycleController {
 
     private HttpHeaders prepareHttpHeadersWithTenantId(String tenantId) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("TenantId", tenantId);
+        httpHeaders.add(TENANT_ID, tenantId);
         logger.info("httpserver {} ", httpHeaders.toString());
         return httpHeaders;
     }
