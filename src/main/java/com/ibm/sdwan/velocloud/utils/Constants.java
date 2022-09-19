@@ -18,5 +18,6 @@ public class Constants
     public static final String EDGE_ID="id";
     public static final String ACTIVATION_KEY="activationKey";
     public static final String PROTOCOL_TYPE="http";
+    public static final String TENANT_ID = "tenantId";
 
 }

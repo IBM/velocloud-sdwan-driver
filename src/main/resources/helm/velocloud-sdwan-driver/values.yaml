@@ -25,7 +25,7 @@ global:
 docker:
   ## Name of the Docker Image
   ## image: icr.io/cp4na-drivers/velocloud-sdwan-driver
-  image: alm-docker-local.artifactory.swg-devops.com/open-source-drivers/velocloud-sdwan-driver
+  image: icr.io/cp4na-drivers/velocloud-sdwan-driver
   ## Tagged version of the Docker Image
   version: #project.version#
   ## Pull policy on the Docker Image (when global.docker.registryEnabled is false)
