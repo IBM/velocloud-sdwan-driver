@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.ibm.sdwan.velocloud.config.SDWDriverConstants;
@@ -14,6 +15,7 @@ import com.ibm.sdwan.velocloud.service.MissingPropertyException;
 public class ValidationUtilsTest {
 	
 	@Test
+	@DisplayName("Testing positive scenario for validating DeploymentProperties")
 	public void validateDeploymentPropertiesTest() {
 		Map<String, Object> deploymentLocationProperties = new HashMap<String, Object>();
 		deploymentLocationProperties.put(SDWanDriver.API_CONTEXT, null);

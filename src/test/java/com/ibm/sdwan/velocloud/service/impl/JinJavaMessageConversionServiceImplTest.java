@@ -25,6 +25,7 @@ public class JinJavaMessageConversionServiceImplTest {
     private static final String TEMPLATE_PATH = "templates-test";
 
     @Test
+    @DisplayName("Testing positive scenario for Generate Message From Request For Create")
     public void testGenerateMessageFromRequestForCreate() throws MessageConversionException, IOException {
         JinJavaMessageConversionServiceImpl jinJavaMessageConversionService = new JinJavaMessageConversionServiceImpl();
         ExecutionRequest executionRequest = new ExecutionRequest();
