@@ -21,6 +21,10 @@ global:
   ## Enable the use of LM security features
   security:
     enabled: false
+    certificates:
+      keystore:
+        secretName: cp4na-o-keystore
+
 ## Docker
 docker:
   ## Name of the Docker Image
@@ -49,6 +53,13 @@ app:
     ## Add environment variables to the pods
     enablePayloadLog: true
     env:
+    security:
+      ssl:
+        enabled: True
+        secret:
+          generate: True
+          name: velocloud-sdwan-driver-tls
+          commonName: velocloud-sdwan-driver
 
   ## secret containing client certificates that are to be trusted
   certificateSecret:
