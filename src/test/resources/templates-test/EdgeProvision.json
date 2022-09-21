@@ -6,6 +6,9 @@
   "modelNumber": modelNumber,
   "description": description,
   "site": {
+  "id": 001,
+    "created": create,
+    "logicalId": logicalId,
     "city": siteCity,
     "contactEmail": siteContactEmail,
     "contactMobile": siteContactMobile,
@@ -18,7 +21,18 @@
     "postalCode": sitePostalCode,
     "state": siteState,
     "streetAddress": siteStreetAddress,
-    "streetAddress2": siteStreetAddress2
+    "streetAddress2": siteStreetAddress2,
+    "timezone": ETC,
+    "locale": siteLocale,
+    "shippingSameAsLocation": siteLocaleSameAsLocation,
+    "shippingContactName": siteLocaleSameAsLocation,
+    "shippingAddress": siteShippingAddress,
+    "shippingAddress2": siteShippingAddress2,
+    "shippingCity": siteShippingCity,
+    "shippingState": siteshippingState,
+    "shippingCountry": siteShippingCountry,
+    "shippingPostalCode": siteShippingPostalCode,
+    "modified": siteModified
   },
   "haEnabled": hasEnabled,
   "generateCertificate": generateCertificate,
@@ -28,5 +42,7 @@
   "challengePassword": challengePassword,
   "privateKeyPassword": privateKeyPassword,
   "edgeLicenseId": edgeLicenseId,
-  "customInfo": customInfo
+  "customInfo": customInfo,
+  "analyticsMode": analyticsMode,
+  "generateToken": generateToken
 }

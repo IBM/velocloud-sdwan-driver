@@ -345,6 +345,7 @@
                     <runOrder>alphabetical</runOrder>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -372,6 +373,23 @@
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <!-- exclude classes in package com.acme.models whose name starts with Spring -->
+                        <exclude>com/ibm/sdwan/velocloud/model/**/*</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/security/**/*</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/config/**/*</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/web/NotImplementedException.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/web/SdwanExceptionHandlingControllerAdvice.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/utils/LogUtils.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/utils/Constants.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/service/ThreadInterruptedException.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/service/MissingPropertyException.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/service/MessageConversionException.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/driver/SdwanResponseException.class</exclude>
+                        <exclude>com/ibm/sdwan/velocloud/driver/SDWResponseErrorHandler.class</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

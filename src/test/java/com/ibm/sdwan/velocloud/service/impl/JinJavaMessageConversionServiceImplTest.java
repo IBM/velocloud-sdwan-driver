@@ -1,11 +1,7 @@
 package com.ibm.sdwan.velocloud.service.impl;
 
-import com.ibm.sdwan.velocloud.model.ExecutionRequest;
-import com.ibm.sdwan.velocloud.model.ExecutionRequestPropertyValue;
-import com.ibm.sdwan.velocloud.model.GenericExecutionRequestPropertyValue;
-import com.ibm.sdwan.velocloud.service.MessageConversionException;
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,13 +9,23 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ibm.sdwan.velocloud.model.ExecutionRequest;
+import com.ibm.sdwan.velocloud.model.ExecutionRequestPropertyValue;
+import com.ibm.sdwan.velocloud.model.GenericExecutionRequestPropertyValue;
+import com.ibm.sdwan.velocloud.model.ResourceManagerDeploymentLocation;
+import com.ibm.sdwan.velocloud.service.MessageConversionException;
+@SpringBootTest
 public class JinJavaMessageConversionServiceImplTest {
 
     private static final String TEMPLATE_PATH = "templates-test";
 
     @Test
+    @DisplayName("Testing positive scenario for Generate Message From Request For Create")
     public void testGenerateMessageFromRequestForCreate() throws MessageConversionException, IOException {
         JinJavaMessageConversionServiceImpl jinJavaMessageConversionService = new JinJavaMessageConversionServiceImpl();
         ExecutionRequest executionRequest = new ExecutionRequest();
@@ -39,9 +45,25 @@ public class JinJavaMessageConversionServiceImplTest {
         resourceProperties.put("siteContactPhone", new GenericExecutionRequestPropertyValue("siteContactPhone"));
         resourceProperties.put("siteCountry", new GenericExecutionRequestPropertyValue("siteCountry"));
         resourceProperties.put("siteLat", new GenericExecutionRequestPropertyValue("siteLat"));
+        resourceProperties.put("siteId", new GenericExecutionRequestPropertyValue("001"));
+        resourceProperties.put("siteCreated", new GenericExecutionRequestPropertyValue("create"));
+        resourceProperties.put("siteLogicalId", new GenericExecutionRequestPropertyValue("logicalId"));
+        resourceProperties.put("siteTimezone", new GenericExecutionRequestPropertyValue("ETC"));
         resourceProperties.put("siteLon", new GenericExecutionRequestPropertyValue("siteLon"));
+        resourceProperties.put("siteLocale", new GenericExecutionRequestPropertyValue("siteLocale"));
+        resourceProperties.put("siteShippingSameAsLocation", new GenericExecutionRequestPropertyValue("siteLocaleSameAsLocation"));
+        resourceProperties.put("siteShippingContactName", new GenericExecutionRequestPropertyValue("siteShippingSameAsLocation"));
+        resourceProperties.put("siteShippingAddress", new GenericExecutionRequestPropertyValue("siteShippingAddress"));
+        resourceProperties.put("siteShippingAddres2", new GenericExecutionRequestPropertyValue("siteShippingAddress2"));
+        resourceProperties.put("siteShippingCity", new GenericExecutionRequestPropertyValue("siteShippingCity"));
+        resourceProperties.put("siteshippingState", new GenericExecutionRequestPropertyValue("siteshippingState"));
+        resourceProperties.put("siteShippingCountry", new GenericExecutionRequestPropertyValue("siteShippingCountry"));
         resourceProperties.put("siteName", new GenericExecutionRequestPropertyValue("siteName"));
+        resourceProperties.put("siteShippingPostalCode", new GenericExecutionRequestPropertyValue("siteShippingPostalCode"));
         resourceProperties.put("sitePostalCode", new GenericExecutionRequestPropertyValue("sitePostalCode"));
+        resourceProperties.put("siteModified", new GenericExecutionRequestPropertyValue("siteModified"));
+        resourceProperties.put("analyticsMode", new GenericExecutionRequestPropertyValue("analyticsMode"));
+        resourceProperties.put("generateToken", new GenericExecutionRequestPropertyValue("generateToken"));
         resourceProperties.put("siteState", new GenericExecutionRequestPropertyValue("siteState"));
         resourceProperties.put("siteStreetAddress", new GenericExecutionRequestPropertyValue("siteStreetAddress"));
         resourceProperties.put("siteStreetAddress2", new GenericExecutionRequestPropertyValue("siteStreetAddress2"));
@@ -56,6 +78,9 @@ public class JinJavaMessageConversionServiceImplTest {
         resourceProperties.put("customInfo", new GenericExecutionRequestPropertyValue("customInfo"));
 
         executionRequest.setResourceProperties(resourceProperties);
+        ResourceManagerDeploymentLocation deploymentLocation = new ResourceManagerDeploymentLocation();
+        deploymentLocation.getProperties().put("enterpriseId", "enterpriseId");
+        executionRequest.setDeploymentLocation(deploymentLocation);
 
         String parsedTemplate = jinJavaMessageConversionService.generateMessageFromRequest("EdgeProvision", executionRequest);
 
@@ -74,6 +99,7 @@ public class JinJavaMessageConversionServiceImplTest {
 
 
     @Test
+    @DisplayName("Testing positive scenario for Extract Properties from Message For Create")
     public void testExtractPropertiesFromMessageForCreate(){
         JinJavaMessageConversionServiceImpl jinJavaMessageConversionService = new JinJavaMessageConversionServiceImpl();
         ExecutionRequest executionRequest = new ExecutionRequest();
@@ -86,7 +112,7 @@ public class JinJavaMessageConversionServiceImplTest {
         internalMap.put("privateKey","myPrivateKey");
         internalMap.put("privateKeyPassword","myPrivateKeyPassword");
         internalMap.put("csr","myCsr");
-        expectedOutputs.put("generatedCertificate",internalMap);
+        expectedOutputs.put("generatedCertificate",internalMap); 
         String jsonMessage="{\n" +
                 "  \"id\": 0,\n" +
                 "  \"activationKey\": \"myActivationKey\",\n" +
@@ -107,6 +133,7 @@ public class JinJavaMessageConversionServiceImplTest {
 
 
     @Test
+    @DisplayName("Testing exception scenario for Create NotFound")
     public void testErrorScenario() {
         JinJavaMessageConversionServiceImpl jinJavaMessageConversionService = new JinJavaMessageConversionServiceImpl();
         ExecutionRequest executionRequest = new ExecutionRequest();
