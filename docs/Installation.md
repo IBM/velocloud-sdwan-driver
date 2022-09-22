@@ -25,7 +25,7 @@ oc get secret velocloud-sdwan-driver-tls -o 'go-template={{index .data "tls.crt"
 The following command will onboard the velocloud-sdwan-driver into CP4NA environment called 'dev01':
 
 ```bash
-lmctl resourcedriver add --type velocloud-sdwan --url http://velocloud-sdwan-driver:8196 dev01 --certificate velocloud-sdwan-driver-tls.pem
+lmctl resourcedriver add --type velocloud-sdwan --url https://velocloud-sdwan-driver:8196 dev01 --certificate velocloud-sdwan-driver-tls.pem
 ```
 
 **NOTES**:
