@@ -24,7 +24,6 @@ global:
 ## Docker
 docker:
   ## Name of the Docker Image
-  ## image: icr.io/cp4na-drivers/velocloud-sdwan-driver
   image: icr.io/cp4na-drivers/velocloud-sdwan-driver
   ## Tagged version of the Docker Image
   version: #project.version#
