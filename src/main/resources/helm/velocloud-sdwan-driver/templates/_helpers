@@ -1,0 +1,10 @@
+{{/*
+Generate SSL certificate
+*/}}
+{{- define "gen-cert" -}}
+{{- $ca := genCA "VeloCloud SDWAN Driver CA" 3650 -}}
+{{- $cert := genSignedCert "velocloud-sdwan-driver" nil nil 3650 $ca -}}
+tls.crt: {{ $cert.Cert | b64enc }}
+tls.key: {{ $cert.Key | b64enc }}
+ca.crt: {{$ca.Cert | b64enc }}
+{{- end -}}

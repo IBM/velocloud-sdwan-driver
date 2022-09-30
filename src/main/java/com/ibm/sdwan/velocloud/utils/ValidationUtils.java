@@ -12,7 +12,10 @@ import static com.ibm.sdwan.velocloud.driver.SDWanDriver.*;
 public class ValidationUtils {
 
     public static void validateDeploymentProperties(Map<String, Object> deploymentLocationProperties) {
-
+        if(deploymentLocationProperties==null || deploymentLocationProperties.isEmpty())
+        {
+            throw new MissingPropertyException(" deploymentLocation property is mandatory and it is missing.");
+        }
         if (deploymentLocationProperties.get(API_CONTEXT) instanceof String) {
             if (!StringUtils.hasLength((String) deploymentLocationProperties.get(API_CONTEXT))) {
                 throw new MissingPropertyException(" apiContext property is mandatory and it is missing in deploymentLocation");
