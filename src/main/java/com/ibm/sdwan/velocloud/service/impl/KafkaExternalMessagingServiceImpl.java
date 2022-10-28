@@ -40,7 +40,7 @@ public class KafkaExternalMessagingServiceImpl implements ExternalMessagingServi
     @Override public void sendExecutionAsyncResponse(ExecutionAsyncResponse request, String tenantId) {
         try {
             final String message = objectMapper.writeValueAsString(request);
-            if(tenantId.equals("1")) {
+            if(tenantId.isEmpty()) {        
                 ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(properties.getTopics().getLifecycleResponsesTopic(), message);
                 future.addCallback(sendResult -> logger.debug("ExecutionAsyncResponse successfully sent"),
                         exception -> logger.warn("Exception while sending ExecutionAsyncResponse", exception));
