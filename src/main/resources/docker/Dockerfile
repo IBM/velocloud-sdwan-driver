@@ -1,8 +1,9 @@
-ARG JDK_IMAGE=openjdk
-ARG JDK_VERSION=11.0.15-jre
+ARG JDK_IMAGE=icr.io/appcafe/ibm-semeru-runtimes
+ARG JDK_VERSION=certified-11-jre-ubi
 FROM ${JDK_IMAGE}:${JDK_VERSION}
 ENV JVM_OPTIONS=-Xmx256m
 COPY *.sh /data/
+USER root
 RUN groupadd -g 1000 -r sld \
  && useradd -u 1000 -g 1000 -r -m sld \
  && chmod +x /data/*.sh \
@@ -11,9 +12,11 @@ RUN groupadd -g 1000 -r sld \
  && chown -R sld:0 /home/sld /var/lm /data \
  && chmod -R 775 /home/sld \
  && chmod -R 775 /var/lm
-RUN apt update -y \
- && apt upgrade -y \
- && rm -rf /var/lib/apt/lists/*
+RUN yum update -y \
+ && yum upgrade -y \
+ && rm -rf /var/lib/yum/lists/*
 USER sld
 COPY velocloud-sdwan-driver-@project.version@.jar /data/velocloud-sdwan-driver-@project.version@.jar
+# Set HOME variable (for OCP arbitrary user)
+ENV HOME /home/sld
 CMD sh /data/commands.sh
