@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.2.0](https://github.com/IBM/velocloud-sdwan-driver/tree/1.1.0) (2022-11-21)
+[Full Changelog](https://github.com/IBM/velocloud-sdwan-driver/compare/1.1.0...1.2.0)
+
+**Implemented enhancements:**
+
+- Add appVersion field in Chart.yaml file
+- IBM semeru offical images updated in pom.xml for sdwan drivers
+- Remove unwanted dependenices in pom.xml for velocloud driver
+
 ## [1.1.0](https://github.com/IBM/velocloud-sdwan-driver/tree/1.1.0) (2022-09-30)
 [Full Changelog](https://github.com/IBM/velocloud-sdwan-driver/compare/1.0.0...1.1.0)
 
