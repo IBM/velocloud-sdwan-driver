@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.2.0](https://github.com/IBM/velocloud-sdwan-driver/tree/1.1.0) (2022-11-21)
+## [1.2.0-RC1](https://github.com/IBM/velocloud-sdwan-driver/tree/1.1.0) (2022-11-21)
 [Full Changelog](https://github.com/IBM/velocloud-sdwan-driver/compare/1.1.0...1.2.0)
 
 **Implemented enhancements:**
