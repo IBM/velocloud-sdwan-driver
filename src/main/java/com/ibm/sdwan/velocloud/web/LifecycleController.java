@@ -38,9 +38,8 @@ public class LifecycleController {
     public ResponseEntity<ExecutionAcceptedResponse> executeLifecycle(@RequestBody ExecutionRequest executionRequest, @RequestHeader(value = "tenantId", required = false) String tenantId, HttpServletRequest servletRequest) throws MessageConversionException{
         logger.info("Received request to execute a lifecycle [{}] ", executionRequest.getLifecycleName());
         logger.debug("Received tenantId [{}] ",tenantId);
-        tenantId = StringUtils.defaultIfEmpty(tenantId, "1");
-        final ExecutionAcceptedResponse responseData = lifecycleManagementService.executeLifecycle(executionRequest, tenantId);
-        if(tenantId.equals("1")){
+        final ExecutionAcceptedResponse responseData = lifecycleManagementService.executeLifecycle(executionRequest, tenantId);        
+        if(tenantId.isEmpty()) {    
             return ResponseEntity.accepted().body(responseData);
         }else{
             return ResponseEntity.accepted().headers(prepareHttpHeadersWithTenantId(tenantId)).body(responseData);
