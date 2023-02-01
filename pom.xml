@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ibm.velocloud-sdwan-driver</groupId>
     <artifactId>velocloud-sdwan-driver</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.2-dev1</version>
     <name>velocloud-sdwan-driver</name>
     <description>SD-WAN Driver for CP4NA</description>
     <organization>
@@ -25,6 +25,7 @@
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
         <docker.directory>docker-ready</docker.directory>
         <docker.registry>icr.io/cp4na-drivers</docker.registry>
+        <guava.version>31.1-jre</guava.version>
         <helm.chart.name>${project.artifactId}</helm.chart.name>
         <helm.download.url>https://get.helm.sh/${helm-client-executable}</helm.download.url>
         <helm.repo.addr>https://repo.helm.com</helm.repo.addr>
@@ -33,6 +34,7 @@
         <helm.repo.url>${helm.repo.addr}/accanto/stable</helm.repo.url>
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <java.version>11</java.version>
+        <jsoup.version>1.15.3</jsoup.version>
         <kiwigrid.version>4.13</kiwigrid.version>
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
@@ -45,10 +47,13 @@
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <snakeyaml.version>1.32</snakeyaml.version>
         <sortpom-maven-plugin.version>2.8.0</sortpom-maven-plugin.version>
-        <jsoup.version>1.15.3</jsoup.version>
-        <guava.version>31.1-jre</guava.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.hubspot.jinjava</groupId>
             <artifactId>jinjava</artifactId>
@@ -68,6 +73,11 @@
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash-logback-encoder.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -114,24 +124,14 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-	<dependency>
-	    <groupId>org.springframework.security</groupId>
-	    <artifactId>spring-security-core</artifactId>
-	    <version>5.7.5</version>
-	</dependency>	    
     </dependencies>
 
     <build>

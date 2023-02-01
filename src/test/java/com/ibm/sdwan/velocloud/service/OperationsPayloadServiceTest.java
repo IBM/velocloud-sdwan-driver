@@ -285,5 +285,40 @@ public class OperationsPayloadServiceTest {
     	Boolean result = operationsPayloadService.isEdgeAvailable(executionRequest);
     	Assertions.assertFalse(result);
     }
-    
+
+    @Test
+    @DisplayName("Test edgeId is not passed")
+    public void testIsEdgeIdEmpty(){
+        Boolean result = operationsPayloadService.isEdgeIdEmpty(executionRequest);
+        executionRequest.setResourceProperties(resourceProperties);
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Test edgeId is string and empty")
+    public void testIsEdgeIdEmptyString(){
+        resourceProperties.put("id", new GenericExecutionRequestPropertyValue(""));
+        executionRequest.setResourceProperties(resourceProperties);
+        Boolean result = operationsPayloadService.isEdgeIdEmpty(executionRequest);
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Test edgeId is string and having some value")
+    public void testIsEdgeIdEmptyStringWithValue(){
+        resourceProperties.put("id", new GenericExecutionRequestPropertyValue("123"));
+        executionRequest.setResourceProperties(resourceProperties);
+        Boolean result = operationsPayloadService.isEdgeIdEmpty(executionRequest);
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Test edgeId is integer and having some value")
+    public void testIsEdgeIdEmptyIntegerWithValue(){
+        resourceProperties.put("id", new GenericExecutionRequestPropertyValue(123));
+        executionRequest.setResourceProperties(resourceProperties);
+        Boolean result = operationsPayloadService.isEdgeIdEmpty(executionRequest);
+        Assertions.assertFalse(result);
+    }
+
 }

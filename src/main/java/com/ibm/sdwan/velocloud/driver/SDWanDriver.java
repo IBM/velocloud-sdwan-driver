@@ -160,6 +160,8 @@ public class SDWanDriver {
         try {
             final ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
                     String.class);
+            // Check the status code and if it is 200 then only return true else return false.
+            // TBD.
         } catch (HttpClientErrorException e) {
             logger.info("Error message: " +e.getMessage());
             logger.info("Status Code: " + e.getStatusCode());
