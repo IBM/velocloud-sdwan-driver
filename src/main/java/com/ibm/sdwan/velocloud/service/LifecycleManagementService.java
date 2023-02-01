@@ -100,6 +100,11 @@ public class LifecycleManagementService {
                     outputs = messageConversionService.extractPropertiesFromMessage(response);
                     break;
                 case LIFECYCLE_DELETE:
+                    // check EdgeId is empty? if yes, break the switch to complete Delete lifecycle
+                    if(operationsPayloadService.isEdgeIdEmpty(executionRequest)){
+                        logger.info("EdgeId is null or empty. Delete lifecycle proceeds to succeed");
+                        break;
+                    }
                     // check Edge exist or not
                     if (operationsPayloadService.isEdgeAvailable(executionRequest)) {
                         edgeStatusMessage.setStatusMessage(PollingEdgeStatus.NOT_READY);
