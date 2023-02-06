@@ -43,6 +43,7 @@ public class JinJavaMessageConversionServiceImpl implements MessageConversionSer
 
     @Override
     public Map<String, Object> extractPropertiesFromMessage( String message) {
+        logger.info("About to extract....");
         return convertJsonToMap(message);
     }
 
@@ -50,7 +51,9 @@ public class JinJavaMessageConversionServiceImpl implements MessageConversionSer
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> map = new HashMap<>();
         try {
+            logger.info("i/p: "+jsonMessage);
             map = objectMapper.readValue(jsonMessage, Map.class);
+            logger.info("o/p: "+map);
             logger.debug("Map is " + map);
             logger.debug("Map Size is " + map.size());
         } catch (Exception e) {
