@@ -1,6 +1,7 @@
 package com.ibm.sdwan.velocloud.model.velocloud;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.Data;
 import java.util.LinkedHashMap;
 import java.util.Map;
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EdgeModule {
     private String created;
     private String effective;

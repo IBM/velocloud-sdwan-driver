@@ -210,14 +210,8 @@ public class OperationsPayloadService {
         int edgeId;
         try {
             if (executionRequest.getProperties().get(EDGE_ID) instanceof String) {
-                if (!StringUtils.hasLength((String) executionRequest.getProperties().get(EDGE_ID))) {
-                    throw new MissingPropertyException(" id property of an edge is mandatory and it is missing");
-                }
                 edgeId = (Integer.parseInt((String) executionRequest.getProperties().get(EDGE_ID)));
             } else {
-                if (executionRequest.getProperties().get(EDGE_ID) == null) {
-                    throw new MissingPropertyException(" id property of an edge is mandatory and it is missing");
-                }
                 edgeId = ((int) executionRequest.getProperties().get(EDGE_ID));
             }     
             getEdgeRequestPayload = buildPayloadForGetEdge(
@@ -230,6 +224,18 @@ public class OperationsPayloadService {
             throw new MessageConversionException("Error while checking edge existence ");
         }
          
+    }
+
+    public Boolean isEdgeIdEmpty(ExecutionRequest executionRequest) {
+        if(executionRequest.getProperties().get(EDGE_ID) == null) {
+            return true;
+        }
+        if (executionRequest.getProperties().get(EDGE_ID) instanceof String) {
+            if (!StringUtils.hasLength((String) executionRequest.getProperties().get(EDGE_ID))) {
+               return true;
+            }
+        }
+        return false;
     }
 
     public String buildPayloadForGetEdge(Map<String, Object> deploymentLocationProperties, int id, String activationKey)

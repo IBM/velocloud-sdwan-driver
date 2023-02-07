@@ -98,8 +98,17 @@ public class LifecycleManagementService {
                     String response = this.sdwanDriver.execute(lifecycleName,
                             executionRequest.getDeploymentLocation().getProperties(), requestPayload, requestId);
                     outputs = messageConversionService.extractPropertiesFromMessage(response);
-                    break;
+                    if(validateOutputs(outputs)) {
+                        break;
+                    }else{
+                        throw new SdwanResponseException(String.format("Error: %s", response));
+                    }
                 case LIFECYCLE_DELETE:
+                    // check EdgeId is empty? if yes, break the switch to complete Delete lifecycle
+                    if(operationsPayloadService.isEdgeIdEmpty(executionRequest)){
+                        logger.info("EdgeId is null or empty. Delete lifecycle proceeds to succeed");
+                        break;
+                    }
                     // check Edge exist or not
                     if (operationsPayloadService.isEdgeAvailable(executionRequest)) {
                         edgeStatusMessage.setStatusMessage(PollingEdgeStatus.NOT_READY);
@@ -152,5 +161,12 @@ public class LifecycleManagementService {
                 rcDriverProperties.getExecutionResponseDelay());
 
         return new ExecutionAcceptedResponse(requestId); 
+    }
+    private boolean validateOutputs(Map<String,Object> outputs){
+        if(outputs.containsKey(EDGE_ID) && outputs.containsKey(ACTIVATION_KEY)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

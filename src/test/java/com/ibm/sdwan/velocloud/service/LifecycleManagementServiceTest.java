@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ibm.sdwan.velocloud.service.impl.JinJavaMessageConversionServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +33,7 @@ public class LifecycleManagementServiceTest {
     private Map<String, ExecutionRequestPropertyValue> resourceProperties;
     @Mock
     private SDWanDriver sdwanDriver;
-	@Mock
+	//@Mock
     private MessageConversionService messageConversionService;
 	@Mock
     private ExternalMessagingService externalMessagingService;
@@ -48,6 +49,7 @@ public class LifecycleManagementServiceTest {
 	private String tenantId;	
 	@BeforeEach
 	public void setUp() {
+		messageConversionService= new JinJavaMessageConversionServiceImpl();
 		lifecycleManagementService = new LifecycleManagementService(sdwanDriver, messageConversionService, externalMessagingService, rcDriverProperties, operationsPayloadService, internalMessagingService, edgeStatusMessage);
 		executionRequest = new ExecutionRequest();
 		tenantId= "1";
@@ -110,10 +112,22 @@ public class LifecycleManagementServiceTest {
 	@DisplayName("Testing positive scenario for Execute Lifecycle Create")
 	public void executeLifecycleCreateTest() throws MessageConversionException {
 		executionRequest.setLifecycleName(Constants.LIFECYCLE_CREATE);
-		Mockito.when(operationsPayloadService.buildPayloadForAddVlan(Mockito.any(), Mockito.anyString())).thenReturn("");
-		Mockito.when(sdwanDriver.execute(Mockito.anyString(), Mockito.anyMap(), Mockito.anyString(),Mockito.anyString())).thenReturn("");
+		executionRequest.setResourceProperties(resourceProperties);
+		Mockito.when(sdwanDriver.execute(Mockito.anyString(), Mockito.anyMap(), Mockito.any(),Mockito.anyString())).thenReturn("{\"id\":\"123\", \"activationKey\":\"key123\"}");
 		ExecutionAcceptedResponse result = lifecycleManagementService.executeLifecycle(executionRequest,tenantId);
 		Assertions.assertNotNull(result);
+	}
+
+	@Test
+	@DisplayName("Testing Exception scenario for Execute Lifecycle Create")
+	public void executeLifecycleCreateExceptionTest() throws MessageConversionException {
+		executionRequest.setLifecycleName(Constants.LIFECYCLE_CREATE);
+		executionRequest.setResourceProperties(resourceProperties);
+		Mockito.when(sdwanDriver.execute(Mockito.anyString(), Mockito.anyMap(), Mockito.any(),Mockito.anyString())).thenReturn("");
+
+		Assertions.assertThrows(SdwanResponseException.class, ()->{
+			lifecycleManagementService.executeLifecycle(executionRequest,tenantId);
+		});
 	}
 
 	@Test

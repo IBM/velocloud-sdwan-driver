@@ -1,8 +1,10 @@
 package com.ibm.sdwan.velocloud.model.velocloud;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EdgeConfiguration {
     private String configurationType;
     private String bastionState;
