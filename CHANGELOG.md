@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.3.0](https://github.com/IBM/velocloud-sdwan-driver/tree/1.3.0) (2023-02-07)
+[Full Changelog](https://github.com/IBM/velocloud-sdwan-driver/compare/1.2.1...1.3.0)
+
+**Implemented enhancements:**
+
+- VPC Deletion failed when edge id was empty/null
+- VPC/VNET Creation failed with error message as "Could not convert the response payload to EdgeConfigurations Java class model"
+
 ## [1.2.1](https://github.com/IBM/velocloud-sdwan-driver/tree/1.2.1) (2022-12-08)
 [Full Changelog](https://github.com/IBM/velocloud-sdwan-driver/compare/1.2.0...1.2.1)
 
