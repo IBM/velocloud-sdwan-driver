@@ -36,6 +36,7 @@ public class LifecycleController {
     @PostMapping("/lifecycle/execute")
     @Operation(description  = "Execute a lifecycle against a sdwan", summary  = "Initiates a lifecycle ")
     public ResponseEntity<ExecutionAcceptedResponse> executeLifecycle(@RequestBody ExecutionRequest executionRequest, @RequestHeader(value = "tenantId", required = false) String tenantId, HttpServletRequest servletRequest) throws MessageConversionException{
+        logger.info("Received ExecutionRequest [{}] ", executionRequest);
         logger.info("Received request to execute a lifecycle [{}] ", executionRequest.getLifecycleName());
         logger.debug("Received tenantId [{}] ",tenantId);
         tenantId = StringUtils.defaultIfEmpty(tenantId, "1");
