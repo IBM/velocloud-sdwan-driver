@@ -50,7 +50,7 @@ public class KafkaExternalMessagingServiceImplTest {
 
  		Mockito.when(objectMapper.writeValueAsString(any())).thenReturn("test");
  		Mockito.when(kafkaTemplate.send(Mockito.anyString(), Mockito.anyString())).thenReturn(responseFuture);
- 		kafkaExternalMessagingServiceImpl.sendDelayedExecutionAsyncResponse(executionAsyncResponse,"1",
+ 		kafkaExternalMessagingServiceImpl.sendDelayedExecutionAsyncResponse(executionAsyncResponse,"",
  				Duration.ofMillis(100));
  		verify(objectMapper, times(1)).writeValueAsString(executionAsyncResponse);
  	}
