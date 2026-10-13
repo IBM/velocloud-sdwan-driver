@@ -34,7 +34,7 @@
         <helm.repo.url>${helm.repo.addr}/accanto/stable</helm.repo.url>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <java.version>17</java.version>
-        <jsoup.version>1.15.3</jsoup.version>
+        <jsoup.version>1.23.2</jsoup.version>
         <kiwigrid.version>4.13</kiwigrid.version>
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
